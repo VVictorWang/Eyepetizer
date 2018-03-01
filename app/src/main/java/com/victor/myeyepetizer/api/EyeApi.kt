@@ -5,6 +5,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 /**
  * @author victor
@@ -12,25 +13,19 @@ import retrofit2.converter.gson.GsonConverterFactory
  * @email chengyiwang@hustunique.com
  * @blog www.victorwan.cn                                            #
  */
-class EyeApi(client: OkHttpClient) {
-    private val service: EyeApiService
-
-    companion object {
-        var instance: EyeApi? = null
-        fun getInstance(client: OkHttpClient): EyeApi {
-            if (instance == null) {
-                instance = EyeApi(client)
-            }
-            return instance as EyeApi
-        }
-    }
+object EyeApi {
+    private val retrofit: Retrofit
+    private val client: OkHttpClient
 
     init {
-        val retrofit = Retrofit.Builder().baseUrl(Constants.API_BASE_URL)
+        client = OkHttpClient.Builder().connectTimeout(6, TimeUnit.SECONDS)
+                .build()
+        retrofit = Retrofit.Builder().baseUrl(Constants.API_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(client)
                 .build()
-        service = retrofit.create(EyeApiService::class.java)
     }
+
+    val service: EyeApiService by lazy { retrofit.create(EyeApiService::class.java) }
 }

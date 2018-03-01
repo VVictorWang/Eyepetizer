@@ -1,7 +1,8 @@
-package com.victor.myeyepetizer
+package com.victor.myeyepetizer.ui.activity
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.victor.myeyepetizer.R
 
 class MainActivity : AppCompatActivity() {
 
