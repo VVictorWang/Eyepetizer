@@ -8,7 +8,7 @@ import java.io.Serializable
  * @email vvictorwan@gmail.com
  * @blog www.victorwan.cn                                            #
  */
-data class Item(val type: String, val data: Data?, val tag: String) : Serializable {
+data class Item(val type: String, val data: Data?, val tag: String?) : Serializable {
 
     data class Data(val dataType: String, val text: String, val videoTitle: String, val id: Long,
                     val title: String, val slogan: String?,

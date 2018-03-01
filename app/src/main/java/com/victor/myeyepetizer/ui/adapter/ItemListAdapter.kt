@@ -27,13 +27,24 @@ class ItemListAdapter(var itemList: ArrayList<Item>) : RecyclerView.Adapter<Item
         return itemList.size
     }
 
+    fun setData(items: ArrayList<Item>) {
+        itemList.clear()
+        itemList.addAll(items)
+        notifyDataSetChanged()
+    }
+
     class ItemViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(LayoutInflater.from(parent.context)
             .inflate(R.layout.item_list, null)) {
         fun bind(item: Item) = with(itemView) {
             Glide.with(context).load(item.data?.author?.icon).into(avatar)
             title.text = item.data?.title
             author.text = item.data?.author?.name
-            tagView.text = item.tag
+            if (item.tag != null) {
+                tagView.text = item.tag
+            }
+            if (item.data?.tags!=null && !item.data?.tags.isEmpty()) {
+                tagView.text = "#" + item.data?.tags!![0].name
+            }
             Glide.with(context).load(item.data?.cover?.detail).into(cover)
         }
     }

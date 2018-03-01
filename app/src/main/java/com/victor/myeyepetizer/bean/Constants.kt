@@ -7,5 +7,5 @@ package com.victor.myeyepetizer.bean
  * @blog www.victorwan.cn                                            #
  */
 object Constants {
-    val API_BASE_URL = "http://baobab.kaiyanapp.com/api/"
+    val API_BASE_URL = "http://baobab.kaiyanapp.com/api/v4/"
 }

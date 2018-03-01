@@ -73,9 +73,9 @@ class CircleImageView @JvmOverloads constructor(context: Context, attrs: Attribu
         val a = context.obtainStyledAttributes(attrs, R.styleable.CircleImageView,
                 defStyle, 0)
         // 自定义原型图片边框属性
-        mBorderWidth = a.getDimensionPixelSize(R.styleable.CircleImageView_border_width,
+        mBorderWidth = a.getDimensionPixelSize(R.styleable.CircleImageView_border_widths,
                 DEFAULT_BORDER_WIDTH) // 边框大小
-        mBorderColor = a.getColor(R.styleable.CircleImageView_border_color, DEFAULT_BORDER_COLOR) // 边框颜色
+        mBorderColor = a.getColor(R.styleable.CircleImageView_border_colors, DEFAULT_BORDER_COLOR) // 边框颜色
         a.recycle()
         init()
     }
