@@ -1,6 +1,7 @@
 package com.victor.myeyepetizer.ui.fragment
 
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import com.victor.myeyepetizer.R
 import com.victor.myeyepetizer.bean.Item
 import com.victor.myeyepetizer.ui.adapter.ItemListAdapter
@@ -12,6 +13,10 @@ import kotlinx.android.synthetic.main.fragment_home.*
 
 
 class HomeFragment : BaseFragment(), HomeContract.View {
+    override fun addItemData(itemLists: ArrayList<Item>) {
+        itemListAdapter?.addData(itemLists)
+    }
+
     override fun callFailure(message: String) {
         toast(message)
     }
@@ -36,6 +41,19 @@ class HomeFragment : BaseFragment(), HomeContract.View {
         lists.layoutManager = LinearLayoutManager(context)
         itemListAdapter = ItemListAdapter(ArrayList())
         lists.adapter = itemListAdapter
+        lists.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    val childCount = lists.childCount
+                    val itemCount = lists.layoutManager.itemCount
+                    val firstVisibleItem = (lists.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+                    if (firstVisibleItem + childCount == itemCount) {
+                        mPresenter.loadMore()
+                    }
+                }
+            }
+        })
         mPresenter.start()
     }
 

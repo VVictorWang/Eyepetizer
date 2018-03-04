@@ -12,6 +12,21 @@ import com.victor.myeyepetizer.ui.contract.HomeContract
  * @blog www.victorwan.cn                                            #
  */
 class HomePresenter(val mView: HomeContract.View) : HomeContract.Presenter {
+    private var nextPageUrl: String? = null
+    override fun loadMore() {
+        nextPageUrl?.let {
+            EyeRepository.getInstanc().getMoreHomeData(it, object : RepositoryCallBack<HomeBean> {
+                override fun callSuccess(data: HomeBean) {
+                    nextPageUrl = data.nextPageUrl
+                    mView.addItemData(data.itemList)
+                }
+
+                override fun callFailure(message: String) {
+                    mView.callFailure(message)
+                }
+            })
+        }
+    }
 
     init {
         mView.setPresenter(this)
@@ -24,6 +39,7 @@ class HomePresenter(val mView: HomeContract.View) : HomeContract.Presenter {
             }
 
             override fun callSuccess(data: HomeBean) {
+                nextPageUrl = data.nextPageUrl
                 mView.setItemData(data.itemList)
             }
         })

@@ -14,10 +14,11 @@ import com.victor.myeyepetizer.ui.base.BaseView
 interface HomeContract {
     interface View : BaseView<Presenter> {
         fun setItemData(itemLists: ArrayList<Item>)
+        fun addItemData(itemLists: ArrayList<Item>)
         fun callFailure(message: String)
     }
 
     interface Presenter : BasePresenter {
-
+        fun loadMore()
     }
 }
